@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book index{% endblock %}
+
+{% block body %}
+
+    <h2 class="text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:text-5xl sm:leading-none md:text-6xl text-center">
+        Список<span class="text-green-600"> Книг</span>
+    </h2>
+
+    <div class="p-16">
+        <div class="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 m-5 mb-10">
+            {% for book in pagination %}
+            <div class="bg-white overflow-hidden hover:bg-green-100 border border-gray-200 p-3">
+                <div class="m-2 text-justify text-sm">
+                    <p class="text-right text-xs">в этот день {{ book.year }} году</p>
+                    <h2 class="font-bold text-lg h-2 mb-12">#{{ book.title }}</h2>
+                    <p class="text-xs">Вышла книга знаменитого автора  {{ book.author }}</p>
+                </div>
+                <div class="w-full text-right mt-4">
+                    <a class="text-green-400 uppercase font-bold text-sm" href="{{ path('book_edit', {'id': book.id}) }}">Редактировать</a>
+                </div>
+            </div>
+            {% else %}
+                <!-- Warning Modal -->
+                <div class="bg-white overflow-hidden hover:bg-green-100 border border-gray-200 p-3">
+                    <div class="m-2 text-justify text-sm">
+                        <p class="text-right text-xs">в этот день и в этом году</p>
+                        <h2 class="font-bold text-lg h-2 mb-8">#Могла выйти книга</h2>
+                        <p class="text-xs">книга знаменитого автора, но база данных пуста и мир не узнает о ней</p>
+                    </div>
+                    <div class="w-full text-right mt-4">
+                        <a class="text-green-400 uppercase font-bold text-sm" href="{{ path('book_new') }}">Создайте шедевр</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {# display navigation #}
+    <div class="flex justify-center py-2 m-2" >
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+    <div class="flex justify-center py-2 m-2">
+        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+            <a id="newUser" class="" href="{{ path('book_new') }}">Добавить новые книги</a>
+        </button>
+    </div>
+
+    <!-- -->
+
+{% endblock %}
